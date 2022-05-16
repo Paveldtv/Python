@@ -14,8 +14,8 @@ def start_help(message: telebot.types.Message):
         text='Формат правильной команды:\n доллар рубль 1'
     else:
         text = 'Что бы конвертировать валюту введите команду в следующем формате:\n ' \
-               '<Имя валюты цену которой хотите узнать> ' \
-               '<Валюта в которой указать цена> ' \
+               '<Имя валюты > ' \
+               '<Валюта в которую необходимо конвертировать> ' \
                '<Количество валюты>\nСписок доступных валют /values'
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("/start")
@@ -51,6 +51,7 @@ def convert(message: telebot.types.Message):
         bot.reply_to(message, f"Ошибка пользователя\n{e}")
     except Exception as e:
         bot.reply_to(message, f"Неверная команда\n{e}")
+        text='Ошибка!'
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("/start")
         btn2 = types.KeyboardButton("/help")

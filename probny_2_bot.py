@@ -14,9 +14,9 @@ def start_help(message: telebot.types.Message):
         text='Формат правильной команды:\n доллар рубль 1'
     else:
         text = 'Что бы конвертировать валюту введите команду в следующем формате:\n ' \
-               '<имя валюты цену которой хотите узнать> ' \
-               '<имя валюты в которой надо узнать цену> ' \
-               '<количество валюты>\nСписок доступных валют /values'
+               '<Имя валюты цену которой хотите узнать> ' \
+               '<Валюта в которой указать цена> ' \
+               '<Количество валюты>\nСписок доступных валют /values'
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("/start")
     btn2 = types.KeyboardButton("/help")
@@ -38,7 +38,8 @@ def values(message: telebot.types.Message):
 # Обрабатываются запросы на конвертацию
 @bot.message_handler(content_types=['text'])
 def convert(message: telebot.types.Message):
-    values = message.text.split(' ')
+    str=message.text.lower()
+    values = str.split(' ')
     try:
         if len(values) > 3:
             raise APIExcetion('Слишком много параметров')
@@ -59,7 +60,7 @@ def convert(message: telebot.types.Message):
                              message.from_user), reply_markup=markup)
 
     else:
-        text = f'Стоимость {amount} {base} в {quote} - {total_base * int(amount)} '
+        text = f'Стоимость {amount} {base} в {quote} - {round(total_base * int(amount),2)} '
         bot.send_message(message.chat.id, text)
 
 @bot.message_handler(content_types=['photo','voice','video','sticker','document'])
